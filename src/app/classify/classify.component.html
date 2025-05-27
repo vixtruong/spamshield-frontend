@@ -1,0 +1,29 @@
+<div class="classify-container">
+    <h2>Phân loại Email</h2>
+    <input type="file" (change)="onFileSelected($event)" accept=".csv" />
+    <p *ngIf="fileName">File đã chọn: {{ fileName }}</p>
+
+    <div class="classified-list" *ngIf="classifiedEmails.length > 0">
+        <h3>Kết quả phân loại:</h3>
+        <table mat-table [dataSource]="classifiedEmails" class="mat-elevation-z8">
+            <ng-container matColumnDef="emailId">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let element">{{ element.emailId }}</td>
+            </ng-container>
+            <ng-container matColumnDef="sender">
+                <th mat-header-cell *matHeaderCellDef>Người gửi</th>
+                <td mat-cell *matCellDef="let element">{{ element.sender }}</td>
+            </ng-container>
+            <ng-container matColumnDef="subject">
+                <th mat-header-cell *matHeaderCellDef>Tiêu đề</th>
+                <td mat-cell *matCellDef="let element">{{ element.subject }}</td>
+            </ng-container>
+            <ng-container matColumnDef="label">
+                <th mat-header-cell *matHeaderCellDef>Nhãn</th>
+                <td mat-cell *matCellDef="let element">{{ element.label }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>

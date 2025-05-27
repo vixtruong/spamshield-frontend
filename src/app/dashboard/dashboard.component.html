@@ -1,0 +1,54 @@
+<div class="dashboard-container">
+    <h2>Tổng quan Email</h2>
+
+    <div class="filter-section">
+        <label for="timeFilter">Lọc theo thời gian:</label>
+        <select id="timeFilter" [(ngModel)]="selectedFilter" (change)="applyTimeFilter()">
+            <option value="all">Tất cả</option>
+            <option value="today">Hôm nay</option>
+            <option value="week">Tuần này</option>
+            <option value="month">Tháng này</option>
+            <option value="custom">Tùy chọn</option>
+        </select>
+
+        <div *ngIf="selectedFilter === 'custom'" class="custom-date-range">
+            <label>Từ:</label>
+            <input type="date" [(ngModel)]="customStartDate">
+            <label>Đến:</label>
+            <input type="date" [(ngModel)]="customEndDate">
+            <button (click)="applyTimeFilter()">Lọc</button>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+    </div>
+
+    <div class="email-list">
+        <h3>Danh sách Email</h3>
+        <table mat-table [dataSource]="filteredEmails" class="mat-elevation-z8">
+            <ng-container matColumnDef="emailId">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let element">{{ element.emailId }}</td>
+            </ng-container>
+            <ng-container matColumnDef="sender">
+                <th mat-header-cell *matHeaderCellDef>Người gửi</th>
+                <td mat-cell *matCellDef="let element">{{ element.sender }}</td>
+            </ng-container>
+            <ng-container matColumnDef="subject">
+                <th mat-header-cell *matHeaderCellDef>Tiêu đề</th>
+                <td mat-cell *matCellDef="let element">{{ element.subject }}</td>
+            </ng-container>
+            <ng-container matColumnDef="label">
+                <th mat-header-cell *matHeaderCellDef>Nhãn</th>
+                <td mat-cell *matCellDef="let element">{{ element.label }}</td>
+            </ng-container>
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef>Ngày tạo</th>
+                <td mat-cell *matCellDef="let element">{{ element.createdAt | date:'medium' }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>
