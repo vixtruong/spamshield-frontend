@@ -7,6 +7,7 @@ import { DatePipe} from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective  } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadEmails();
@@ -54,6 +55,10 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => console.error('Error loading emails:', err)
     });
+  }
+
+  goToDetail(emailId: number): void {
+    this.router.navigate(['/email-detail', emailId]);
   }
 
   applyTimeFilter(): void {

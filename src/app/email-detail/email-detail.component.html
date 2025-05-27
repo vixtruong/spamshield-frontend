@@ -1,0 +1,39 @@
+<div class="email-detail-container" *ngIf="emailDetail!; else loading">
+    <h2>Chi tiết Email</h2>
+
+    <div class="email-info">
+        <h3>Thông tin Email</h3>
+        <p><strong>ID:</strong> {{ emailDetail!.emailId }}</p>
+        <p><strong>Người gửi:</strong> {{ emailDetail!.sender }}</p>
+        <p><strong>Tiêu đề:</strong> {{ emailDetail!.subject }}</p>
+        <p><strong>Nội dung:</strong> {{ emailDetail!.content }}</p>
+        <p><strong>Nhãn:</strong> {{ emailDetail!.label }}</p>
+        <p><strong>Ngày gửi:</strong> {{ emailDetail!.emailDate }}</p>
+        <p><strong>Ngày tạo:</strong> {{ emailDetail!.createdAt }}</p>
+    </div>
+
+    <div class="explanation-info" *ngIf="emailDetail!.emailExplanations!.length > 0">
+        <h3>Giải thích phân loại</h3>
+        <div *ngFor="let explanation of emailDetail!.emailExplanations">
+            <p><strong>Nhãn dự đoán:</strong> {{ explanation.predictedLabel }}</p>
+            <p><strong>Xác suất:</strong> Ham: {{ explanation.probabilities.ham
+                }}, Spam: {{ explanation.probabilities.spam }}</p>
+            <p><strong>Lý do:</strong> {{ explanation.explanationMessage }}</p>
+            <h4>Từ khóa quan trọng:</h4>
+            <ul>
+                <li *ngFor="let keyword of explanation.keyWords">
+                    <strong>{{ keyword.word }}</strong> (TF-IDF: {{ keyword.tfidf_score }} | Đóng
+                    góp Spam: {{ keyword.spam_contribution
+                    }} | Đóng góp Ham: {{ keyword.ham_contribution }})
+                </li>
+            </ul>
+            <p><strong>Ngày tạo giải thích:</strong> {{ explanation.createdAt }}</p>
+        </div>
+    </div>
+
+    <button (click)="goBack()">Quay lại</button>
+</div>
+
+<ng-template #loading>
+    <p>Đang tải dữ liệu...</p>
+</ng-template>

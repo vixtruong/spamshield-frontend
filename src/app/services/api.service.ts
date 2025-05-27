@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Email } from '../models/email.model';
+import { Email, EmailDetail } from '../models/email.model'; // Đảm bảo import EmailDetail
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,9 @@ export class ApiService {
 
   getAllEmails(): Observable<Email[]> {
     return this.http.get<Email[]>(`${this.apiUrl}/all`);
+  }
+
+  getEmailDetail(emailId: number): Observable<EmailDetail> {
+    return this.http.get<EmailDetail>(`${this.apiUrl}/${emailId}`);
   }
 }
